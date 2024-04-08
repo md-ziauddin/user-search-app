@@ -1,35 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// App.js
+import React, { useState, useEffect } from "react";
+import fetchUserData from "./UserData.jsx";
+import UserCard from "./UserCard";
+import Search from "./Search";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const userData = await fetchUserData();
+      setUsers(userData);
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (searchQuery === "") {
+      setFilteredUsers([]);
+    }
+  }, [searchQuery]);
+
+  const handleSearch = (query) => {
+    if (query === "") {
+      setSearchQuery("");
+    }
+    setSearchQuery(query);
+    const filtered = users.filter((user) => {
+      const matchesQuery = Object.values(user).some((value) => {
+        if (Array.isArray(value)) {
+          return value.some((item) =>
+            item.toLowerCase().includes(query.toLowerCase())
+          );
+        } else {
+          return (
+            typeof value === "string" &&
+            value.toLowerCase().includes(query.toLowerCase())
+          );
+        }
+      });
+      return matchesQuery;
+    });
+    setFilteredUsers(filtered);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="app">
+      <Search handleSearch={handleSearch} />
+      <div className="user-list">
+        {filteredUsers.map((user) => (
+          <UserCard key={user.id} user={user} query={searchQuery} />
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default App
+export default App;
