@@ -9,7 +9,7 @@ const UserCard = ({ user, query }) => {
     const parts = text.split(new RegExp(`(${query})`, "gi"));
     return parts.map((part, index) =>
       part.toLowerCase() === query.toLowerCase() ? (
-        <span key={index} style={{ color: "blue" }}>
+        <span key={index} className="highlightText">
           {part}
         </span>
       ) : (
@@ -35,7 +35,14 @@ const UserCard = ({ user, query }) => {
         ))}
       </p>
       {itemsContainQuery && (
-        <p style={{ color: "blue" }}>{`${query} found in items`}</p>
+        <div className="itemsContainQuery">
+          <div className="itemsContainQueryCircle">
+            <svg height="10" width="10" xmlns="http://www.w3.org/2000/svg">
+              <circle r="3" cx="3" cy="3" fill="#4cb3f7" />
+            </svg>
+          </div>
+          <p className="itemsContainQueryText">{`"${query}" found in items`}</p>
+        </div>
       )}
     </div>
   );

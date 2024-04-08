@@ -11,11 +11,82 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background-color: #eee;
 }
 
 .app {
+  color: black;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.search > input {
+  border: 2px solid #fefefe;
+  background: white;
+  color: black;
+  border-radius: 5px;
+  outline: none;
+  padding: 10px;
+  width: 200px;
+}
+
+.search > input:focus {
+  border: 2px solid #7eccfc;
+  outline: 2px solid #7eccfc;
+  transition: all 0.7s;
+}
+
+.user-list {
+  margin-top: 10px;
+  height: 550px;
+  overflow: scroll;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-card {
+  border: 1px solid #4cb3f7;
+  border-radius: 5px;
+  padding: 10px 15px;
+  background: white;
+
+  width: 400px;
+}
+
+.no-user-found {
+  width: 300px;
+  min-height: 100px;
+}
+.highlightText {
+  color: #4cb3f7;
+}
+
+.itemsContainQuery {
+}
+
+.itemsContainQuery::before,
+.itemsContainQuery::after {
+  display: inline-block;
+  content: "";
+  border-top: 1px solid #eee;
+  width: 100%;
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.itemsContainQueryCircle {
+  display: inline;
+  padding: 0 10px;
+}
+
+.itemsContainQueryText {
+  display: inline;
+  line-height: 1;
+  margin-top: 0px;
+  margin-bottom: -8px;
 }
