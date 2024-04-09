@@ -1,4 +1,4 @@
-// Search.js
+// Search.js - Search input component
 import React from "react";
 
 const Search = ({ handleSearch, inputRef, handleKeyDown }) => {

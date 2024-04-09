@@ -1,4 +1,4 @@
-// UserCard.js
+// UserCard.js - Individual user card component
 import React, { useRef } from "react";
 
 const UserCard = ({
@@ -11,6 +11,7 @@ const UserCard = ({
 }) => {
   const cardRef = useRef(null);
 
+  // Function to highlight matching text within user details
   const highlightText = (text, query) => {
     if (!query) return text;
     const parts = text.split(new RegExp(`(${query})`, "gi"));
