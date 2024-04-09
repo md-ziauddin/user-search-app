@@ -1,7 +1,7 @@
 // UserCard.js
 import React from "react";
 
-const UserCard = ({ user, query }) => {
+const UserCard = ({ user, query, isHighlighted }) => {
   const highlightText = (text, query) => {
     if (!query) return text;
     // Splitting the text based on the given query, while preserving the query itself
@@ -23,7 +23,7 @@ const UserCard = ({ user, query }) => {
   );
 
   return (
-    <div className="user-card">
+    <div tabIndex={0} className={`user-card ${isHighlighted ? "focused" : ""}`}>
       <h2>{highlightText(user.name, query)}</h2>
       <p>ID: {highlightText(user.id, query)}</p>
       <p>Address: {highlightText(user.address, query)}</p>

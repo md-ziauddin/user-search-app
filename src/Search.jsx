@@ -1,13 +1,19 @@
 // Search.js
 import React from "react";
 
-const Search = ({ handleSearch }) => {
+const Search = ({ handleSearch, inputRef, handleKeyDown }) => {
+  const handleChange = (e) => {
+    handleSearch(e.target.value);
+  };
+
   return (
     <div className="search">
       <input
         type="text"
-        placeholder="Search users..."
-        onChange={(e) => handleSearch(e.target.value)}
+        placeholder="Search..."
+        onChange={handleChange}
+        ref={inputRef}
+        onKeyDown={handleKeyDown}
       />
     </div>
   );
