@@ -1,15 +1,22 @@
 // UserCard.js
-import React from "react";
+import React, { useRef } from "react";
 
-const UserCard = ({ user, query, isHighlighted }) => {
+const UserCard = ({
+  user,
+  query,
+  isHighlighted,
+  handleMouseEnter,
+  handleMouseLeave,
+  handleMouseMove,
+}) => {
+  const cardRef = useRef(null);
+
   const highlightText = (text, query) => {
     if (!query) return text;
-    // Splitting the text based on the given query, while preserving the query itself
-    // The query to be matched, enclosed in parentheses for capturing groups
     const parts = text.split(new RegExp(`(${query})`, "gi"));
     return parts.map((part, index) =>
       part.toLowerCase() === query.toLowerCase() ? (
-        <span key={index} className="highlightText">
+        <span key={index} style={{ color: "blue" }}>
           {part}
         </span>
       ) : (
@@ -23,7 +30,13 @@ const UserCard = ({ user, query, isHighlighted }) => {
   );
 
   return (
-    <div tabIndex={0} className={`user-card ${isHighlighted ? "focused" : ""}`}>
+    <div
+      ref={cardRef}
+      className={`user-card ${isHighlighted ? "focused" : ""}`}
+      onMouseEnter={() => handleMouseEnter(cardRef.current)}
+      onMouseLeave={handleMouseLeave}
+      onMouseMove={handleMouseMove}
+    >
       <h2>{highlightText(user.name, query)}</h2>
       <p>ID: {highlightText(user.id, query)}</p>
       <p>Address: {highlightText(user.address, query)}</p>

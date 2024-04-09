@@ -1,5 +1,5 @@
 // App.js
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import fetchUserData from "./UserData";
 import UserCard from "./UserCard";
 import Search from "./Search";
@@ -8,6 +8,7 @@ const App = () => {
   const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [navigationSource, setNavigationSource] = useState("keyboard");
   const listRef = useRef(null);
   const searchInputRef = useRef(null);
 
@@ -36,12 +37,36 @@ const App = () => {
       setHighlightedIndex((prevIndex) =>
         prevIndex < filteredUsers.length - 1 ? prevIndex + 1 : prevIndex
       );
+      setNavigationSource("keyboard");
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       setHighlightedIndex((prevIndex) =>
         prevIndex > 0 ? prevIndex - 1 : prevIndex
       );
+      setNavigationSource("keyboard");
     }
+  };
+
+  const handleMouseEnter = useCallback(
+    (cardRef) => {
+      console.log("handleMouseEnter", navigationSource);
+      if (navigationSource === "mouse") {
+        const index = Array.from(cardRef.parentNode.children).indexOf(cardRef);
+        setHighlightedIndex(index);
+      }
+    },
+    [navigationSource]
+  );
+
+  const handleMouseLeave = () => {
+    if (navigationSource === "mouse") {
+      setHighlightedIndex(-1);
+    }
+  };
+
+  const handleMouseMove = () => {
+    console.log("handleMouseMove");
+    setNavigationSource("mouse");
   };
 
   const filteredUsers = users.filter((user) => {
@@ -84,6 +109,9 @@ const App = () => {
               user={user}
               query={searchQuery}
               isHighlighted={index === highlightedIndex}
+              handleMouseEnter={handleMouseEnter}
+              handleMouseLeave={handleMouseLeave}
+              handleMouseMove={handleMouseMove}
             />
           ))}
         </div>
