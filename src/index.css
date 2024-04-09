@@ -43,10 +43,28 @@
   margin-top: 10px;
   height: 550px;
   overflow: scroll;
+  overflow-x: hidden;
 
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.user-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.user-list::-webkit-scrollbar-track {
+  background: #eee;
+}
+
+.user-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 6px;
+}
+
+.user-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .user-card {
@@ -58,10 +76,23 @@
   width: 400px;
 }
 
+.user-card > p,
+.user-card > h2 {
+  margin: 0;
+}
+
 .no-user-found {
   width: 300px;
   min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.no-user-found > p {
+  font-weight: 700;
+}
+
 .highlightText {
   color: #4cb3f7;
 }
@@ -92,5 +123,5 @@
 }
 
 .focused {
-  background-color: #eee;
+  background-color: wheat;
 }

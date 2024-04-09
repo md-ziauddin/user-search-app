@@ -122,17 +122,23 @@ const App = () => {
       />
       {state.searchQuery && (
         <div className="user-list" onKeyDown={handleKeyDown} ref={listRef}>
-          {filteredUsers.map((user, index) => (
-            <UserCard
-              key={user.id}
-              user={user}
-              query={state.searchQuery}
-              isHighlighted={index === state.highlightedIndex}
-              handleMouseEnter={() => handleMouseEnter(index)}
-              handleMouseLeave={handleMouseLeave}
-              handleMouseMove={handleMouseMove}
-            />
-          ))}
+          {filteredUsers.length > 0 ? (
+            filteredUsers.map((user, index) => (
+              <UserCard
+                key={user.id}
+                user={user}
+                query={state.searchQuery}
+                isHighlighted={index === state.highlightedIndex}
+                handleMouseEnter={() => handleMouseEnter(index)}
+                handleMouseLeave={handleMouseLeave}
+                handleMouseMove={handleMouseMove}
+              />
+            ))
+          ) : (
+            <div className="user-card no-user-found">
+              <p>No user found!!!</p>
+            </div>
+          )}
         </div>
       )}
     </div>
